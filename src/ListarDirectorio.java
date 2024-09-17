@@ -6,7 +6,9 @@ import java.util.Scanner;
 public class ListarDirectorio {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+        System.out.println("Introduce ruta del directorio: ");
         String nombre = sc.nextLine();
+
         Path dir = Path.of(nombre);
         if (Files.isDirectory(dir)) {
             try (DirectoryStream<Path> stream = Files.newDirectoryStream(dir);) {
