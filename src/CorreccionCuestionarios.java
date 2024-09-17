@@ -36,9 +36,34 @@ public class CorreccionCuestionarios {
                 }
 
                 }
-            System.out.println(resultados);
+            System.out.println(printarResultados(resultados).toString());
+
             } catch (IOException e) {
         System.err.println(e.getMessage());
     }
     }
+
+    public static StringBuilder printarResultados(Map<String,Double> resultados){
+        StringBuilder sb = new StringBuilder();
+        sb.append("Alumno:").append("\t\t").append("Nota:").append("\t\t").append("Calificación:\n");
+
+        for (Map.Entry<String,Double> entry : resultados.entrySet()){
+            sb.append(entry.getKey()).append("\t\t");
+            sb.append(String.format("%.2f",entry.getValue())).append("\t\t");
+            sb.append(obtenerCalificacion(entry.getValue())).append("\n");
+        }
+        return sb;
+    }
+
+    public static String obtenerCalificacion(Double nota){
+        String calificación;
+
+        calificación = nota > 8.5? "Excelente" :
+                        nota > 7.0 && nota < 8.49? "Notable" :
+                        nota > 6 && nota < 6.99? "Bien" :
+                        nota > 5 && nota < 5.99? "Aprobado" :
+                        "Suspenso";
+
+        return calificación;
+        }
 }
