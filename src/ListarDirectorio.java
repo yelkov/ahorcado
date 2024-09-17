@@ -26,15 +26,12 @@ public class ListarDirectorio {
     private static StringBuilder extraerPermisos(Path fichero){
         StringBuilder sb = new StringBuilder();
         File file = fichero.toFile();
-        if (file.isDirectory()) {sb.append("d");}
-            else{sb.append("-");}
-        if (file.canRead()) {sb.append("r");}
-            else{sb.append("-");}
-        if (file.canWrite()) {sb.append("w");}
-            else{sb.append("-");}
-        if (file.canExecute()) {sb.append("x");}
-            else{sb.append("-");}
 
-            return sb;
+        sb.append(file.isDirectory()? "d" : "-");
+        sb.append(file.canRead()? "r" : "-");
+        sb.append(file.canWrite()? "w" : "-");
+        sb.append(file.canExecute()? "x" : "-");
+
+        return sb;
     }
 }
