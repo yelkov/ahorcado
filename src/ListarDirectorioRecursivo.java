@@ -1,12 +1,11 @@
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Parameter;
 import java.nio.file.DirectoryIteratorException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.Scanner;
+import java.util.*;
 
 public class ListarDirectorioRecursivo {
     public static void main(String[] args) {
@@ -24,32 +23,42 @@ public class ListarDirectorioRecursivo {
 
     public static void listarDirectorio(Path dir, int nivel) {
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(dir);) {
+            List<Path> archivos = new ArrayList<>();
+            List<Path> subdirectorios = new ArrayList<>();
+
+
             for (Path fichero: stream) {
-                StringBuilder sb = new StringBuilder();
-
-                for (int i = 0; i < nivel; i++){
-                    sb.append("\t");
-                }
-                sb.append(extraerPermisos(fichero));
-                sb.append(" " + fichero.toFile().getName());
                 if (fichero.toFile().isDirectory()) {
-                    sb.append("/");
-                }
-                System.out.println(sb.toString());
-
-                Deque<Path> stack = new ArrayDeque<Path>();
-                if(fichero.toFile().isDirectory()){
-                    stack.push(fichero);
-                }
-
-                while (!stack.isEmpty()) {
-                    Path p = stack.pop();
-                    listarDirectorio(p, nivel+1);
+                    subdirectorios.add(fichero);
+                } else {
+                    archivos.add(fichero);
                 }
             }
-        } catch (IOException | DirectoryIteratorException ex) {
+                for ( Path archivo : archivos){
+                    printarFichero(archivo, nivel,false);
+                }
+
+                for (Path subdirectorio : subdirectorios) {
+                    printarFichero(subdirectorio,nivel,true);
+                    listarDirectorio(subdirectorio, nivel+1);
+                }
+            } catch (IOException | DirectoryIteratorException ex) {
             System.err.println(ex);
         }
+
+    }
+
+    private static void printarFichero(Path archivo, int nivel, Boolean esDirectorio) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < nivel; i++){
+            sb.append("\t");
+        }
+        sb.append(extraerPermisos(archivo));
+        sb.append(" "+ archivo.toFile().getName());
+        if(esDirectorio){
+            sb.append("/");
+        }
+        System.out.println(sb.toString());
     }
 
     private static StringBuilder extraerPermisos(Path fichero){
