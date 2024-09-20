@@ -13,23 +13,26 @@ public class Minishell {
         while(!salida){
             String input = sc.nextLine();
 
-            if (input.equals("exit")){
-                salida = true;
+            switch(input){
+                case "exit":
+                    salida = true;
+                    break;
+                case "ls":
+                    ListarDirectorio.listarDirectorio(directorio);
+                    break;
+                case "ls -R":
+                    ListarDirectorioRecursivo.listarDirectorio(directorio,0);
+                    break;
+                case "pwd":
+                    System.out.println(directorio.toAbsolutePath().toString());
+                    break;
+                default:
+                    if (input.startsWith("cd")){
+                        directorio = cambiarDirectorio(input);
+                    }else{
+                        System.out.println("El comando introducido es desconocido");
+                    }
             }
-            if (input.equals("ls")){
-                ListarDirectorio.listarDirectorio(directorio);
-            }
-            if (input.equals("ls -r")){
-                ListarDirectorioRecursivo.listarDirectorio(directorio,0);
-            }
-            if (input.startsWith("cd")){
-                directorio = cambiarDirectorio(input);
-            }
-            if (input.equals("pwd")){
-                System.out.println(directorio.toAbsolutePath().toString());
-            }
-
-
         }
     }
 
