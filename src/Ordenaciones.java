@@ -55,7 +55,9 @@ public class Ordenaciones {
             }
         }
         public static String asignarNombre(String nombreArchivo, String tipoOrdenacion) throws IllegalArgumentException {
-            nombreArchivo = nombreArchivo.substring(0,nombreArchivo.length()-4);
+            int indiceExtension = nombreArchivo.lastIndexOf(".");
+            nombreArchivo = nombreArchivo.substring(0,indiceExtension);
+
             switch (tipoOrdenacion) {
                 case "A":
                     return nombreArchivo + "_asc_case.txt";
