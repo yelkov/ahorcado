@@ -11,17 +11,24 @@ public class ListarDirectorio {
 
         Path dir = Path.of(nombre);
         if (Files.isDirectory(dir)) {
-            try (DirectoryStream<Path> stream = Files.newDirectoryStream(dir);) {
-                for (Path fichero: stream) {
-                    StringBuilder sb = extraerPermisos(fichero);
-                    sb.append(" " + fichero.toFile().getName());
-                    System.out.println(sb.toString());
-                }
-            } catch (IOException | DirectoryIteratorException ex) {
-                System.err.println(ex);
-            }
+            listarDirectorio(dir);
         } else {
             System.err.println(dir.toString()+" no es un directorio");
+        }
+    }
+
+    public static void listarDirectorio(Path dir) {
+        try (DirectoryStream<Path> stream = Files.newDirectoryStream(dir);) {
+            for (Path fichero: stream) {
+                StringBuilder sb = extraerPermisos(fichero);
+                sb.append(" " + fichero.toFile().getName());
+                if (fichero.toFile().isDirectory()) {
+                    sb.append("/");
+                }
+                System.out.println(sb.toString());
+            }
+        } catch (IOException | DirectoryIteratorException ex) {
+            System.err.println(ex);
         }
     }
 

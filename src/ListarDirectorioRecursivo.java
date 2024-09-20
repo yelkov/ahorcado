@@ -22,7 +22,7 @@ public class ListarDirectorioRecursivo {
         }
     }
 
-    private static void listarDirectorio(Path dir, int nivel) {
+    public static void listarDirectorio(Path dir, int nivel) {
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(dir);) {
             for (Path fichero: stream) {
                 StringBuilder sb = new StringBuilder();
@@ -32,6 +32,9 @@ public class ListarDirectorioRecursivo {
                 }
                 sb.append(extraerPermisos(fichero));
                 sb.append(" " + fichero.toFile().getName());
+                if (fichero.toFile().isDirectory()) {
+                    sb.append("/");
+                }
                 System.out.println(sb.toString());
 
                 Deque<Path> stack = new ArrayDeque<Path>();
