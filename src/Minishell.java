@@ -13,7 +13,7 @@ public class Minishell {
         Boolean salida = false;
 
         while(!salida){
-            System.out.println(directorio.toAbsolutePath() + ">");
+            System.out.print(directorio.toAbsolutePath() + ">");
             String input = sc.nextLine();
             String comando = input.split(" ",2)[0];
 
