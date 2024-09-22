@@ -1,6 +1,6 @@
 package ahorcado;
 
-import java.io.Serializable;
+import java.io.*;
 
 public class Game implements Serializable {
     private static final long serialversionUID = 1L;
@@ -70,6 +70,34 @@ public class Game implements Serializable {
 
     public boolean hasLost(){
         return errors >= maxErrors;
+    }
+
+    public void saveGame(String fileName){
+        try (ObjectOutputStream writer = new ObjectOutputStream(new FileOutputStream(fileName+ ".bin"))){
+            writer.writeObject(this);
+            System.out.println("El juego se guardó con éxito.");
+        }catch (IOException e){
+            System.out.println("Se produjo un error en el guardado.");
+            System.err.println(e);
+        }
+    }
+
+    public static Game loadGame(String fileName){
+        Game game = null;
+        try(ObjectInputStream reader = new ObjectInputStream(new FileInputStream(fileName))){
+                Object o = reader.readObject();
+                if (o instanceof Game){
+                    game = (Game) o;
+                }
+        }catch (EOFException e){
+            System.out.println("Fin de archivo alcanzado inesperadamente.");
+        }catch (IOException e){
+            System.out.println("Se produjo un error en la lectura del archivo.");
+            System.err.println(e);
+        }catch (ClassNotFoundException e){
+            System.err.println(e);
+        }
+        return game;
     }
 }
 
