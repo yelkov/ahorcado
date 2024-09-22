@@ -1,5 +1,10 @@
 package ahorcado;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Ahorcado {
@@ -14,12 +19,23 @@ public class Ahorcado {
             System.out.println("Introduce la ruta completa del juego a cargar");
             String path = sc.nextLine();
             game = Game.loadGame(path);
+            System.out.println("Juego cargado:");
         }else{
-            game = new Game("colonoscopia",25);
+            try {
+                List<String> possibleWords = Files.readAllLines(Paths.get("res/ahorcado/palabras.txt"));
+                String secretWord = possibleWords.get(new Random().nextInt(0,possibleWords.size()));
+                game = new Game(secretWord,11);
+            }
+            catch (IOException e){
+                System.out.println("Se produjo un error al generar la palabra secreta.");
+            }
         }
 
+        Drawing drawing = new Drawing(game);
 
         while(!game.hasWon() && !game.hasLost()){
+            drawing.setDrawing();
+            System.out.println(drawing.getDrawing().toString());
             System.out.println(game.getState());
             String attempt = sc.nextLine().toLowerCase();
 
@@ -47,10 +63,12 @@ public class Ahorcado {
             System.out.println("La palabra era: " + game.getSecretWord());
             System.out.println("Lo has conseguido en " + game.getAttempts() + " intentos.");
         }else if(game.hasLost()){
+            drawing.setDrawing();
+            System.out.println(drawing.getDrawing().toString());
             System.out.println("Lo siento, ¡HAS PERDIDO!. La palabra era: " + game.getSecretWord());
             System.out.println("Has superado el número máximo de errores.");;
         }else{
-            System.out.println("¡Hasta la proxima!");
+            System.out.println("¡Hasta la próxima!");
         }
     }
 }
