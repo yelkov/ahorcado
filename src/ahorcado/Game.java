@@ -10,7 +10,7 @@ public class Game implements Serializable {
     private final String secretWord;
     private StringBuilder state;
     private Integer errors;
-    private final Integer maxErrors = 11;
+    private static final Integer MAX_ERRORS = 11;
     private Integer attempts;
     private List<Character> guessedCharacters = new ArrayList<Character>();
 
@@ -31,10 +31,6 @@ public class Game implements Serializable {
 
     public Integer getErrors(){
         return this.errors;
-    }
-
-    public Integer getMaxErrors(){
-        return this.maxErrors;
     }
 
     public Integer getAttempts(){
@@ -95,7 +91,7 @@ public class Game implements Serializable {
     }
 
     public boolean hasLost(){
-        return errors >= maxErrors;
+        return errors >= MAX_ERRORS;
     }
 
     public void saveGame(String fileName) throws IOException{
