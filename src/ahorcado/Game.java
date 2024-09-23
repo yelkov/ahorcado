@@ -1,6 +1,8 @@
 package ahorcado;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Game implements Serializable {
     private static final long serialversionUID = 1L;
@@ -10,6 +12,7 @@ public class Game implements Serializable {
     private Integer errors;
     private final Integer maxErrors = 11;
     private Integer attempts;
+    private List<Character> guessedCharacters = new ArrayList<Character>();
 
     public Game(String secretWord, String difficulty) {
         this.secretWord = secretWord.toLowerCase();
@@ -53,7 +56,8 @@ public class Game implements Serializable {
     }
 
     public void guessLetter(Character letter){
-        if (secretWord.contains(letter.toString())){
+        if (secretWord.contains(letter.toString()) && !guessedCharacters.contains(letter)){
+            guessedCharacters.add(letter);
             for (int i = 0; i < secretWord.length(); i++){
                 if (secretWord.charAt(i) == letter){
                     state.setCharAt(i,letter);
