@@ -5,19 +5,17 @@ import java.io.*;
 public class Game implements Serializable {
     private static final long serialversionUID = 1L;
 
-    private String secretWord;
+    private final String secretWord;
     private StringBuilder state;
     private Integer errors;
-    private Integer maxErrors = 11;
+    private final Integer maxErrors = 11;
     private Integer attempts;
-    private String difficulty;
 
     public Game(String secretWord, String difficulty) {
         this.secretWord = secretWord.toLowerCase();
         this.state = new StringBuilder("-".repeat(secretWord.length()));
-        this.difficulty = difficulty;
         this.attempts = 0;
-        setDifficulty(difficulty);
+        setErrors(difficulty);
     }
 
     public String getSecretWord(){
@@ -40,7 +38,7 @@ public class Game implements Serializable {
         return this.attempts;
     }
 
-    public void setDifficulty(String difficulty){
+    public void setErrors(String difficulty){
         switch(difficulty.toLowerCase()){
             case "medium":
                 this.errors = 5;
