@@ -27,6 +27,7 @@ public class Ahorcado {
                 System.out.println("Elige el nivel de dificultad (EASY | medium | hard): ");
                 String difficulty = sc.nextLine().toLowerCase();
                 game = new Game(secretWord,difficulty);
+                System.out.println("Introduce una letra o intenta adivinar la palabra. Escribe 'exit' para salir. ¡Suerte!");
             }
             catch (IOException e){
                 System.out.println("Se produjo un error al generar la palabra secreta.");
