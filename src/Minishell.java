@@ -28,7 +28,6 @@ public class Minishell {
                         ListarDirectorio.listarDirectorio(directorio);
                     }
                     break;
-                case "ls -R":
 
                 case "pwd":
                     System.out.println(directorio.toAbsolutePath().toString() + "\n");
