@@ -37,6 +37,10 @@ public class Game implements Serializable {
         return this.attempts;
     }
 
+    public List<Character> getGuessedCharacters(){
+        return guessedCharacters;
+    }
+
     public void setErrors(String difficulty){
         switch(difficulty.toLowerCase()){
             case "medium":

@@ -56,6 +56,7 @@ public class Ahorcado {
                     System.out.println("Introduce el nombre completo del archivo a guardar: ");
                     try {
                         game.saveGame(sc.nextLine().toLowerCase());
+                        break;
                     }catch (IOException e){
                         System.out.println("Se produjo un error al guardar la partida.");
                     }
