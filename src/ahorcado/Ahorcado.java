@@ -19,7 +19,7 @@ public class Ahorcado {
             System.out.println("Introduce la ruta completa del juego a cargar");
             String path = sc.nextLine();
             game = Game.loadGame(path);
-            System.out.println("Juego cargado:");
+            System.out.println("Juego cargado: ");
         }else{
             try {
                 List<String> possibleWords = Files.readAllLines(Paths.get("res/ahorcado/palabras.txt"));

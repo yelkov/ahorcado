@@ -71,9 +71,14 @@ public class Game implements Serializable {
     }
 
     public void guessWord(String word){
+
         if (secretWord.equals(word)){
             state.setLength(0);
             state.append(word);
+            attempts++;
+        }else if(word.length() != secretWord.length()){
+            System.out.println("Recuerda hacer coincidir el número de letras para intentar adivinar la palabra.");
+            errors++;
             attempts++;
         }else{
             errors++;
