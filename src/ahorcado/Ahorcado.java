@@ -18,7 +18,15 @@ public class Ahorcado {
         if(answer.equals("s")){
             System.out.println("Introduce la ruta completa del juego a cargar");
             String path = sc.nextLine();
-            game = Game.loadGame(path);
+            try {
+                game = Game.loadGame(path);
+            }catch (IOException e){
+                System.out.println("Se produjo un error al cargar el juego.");
+                System.exit(1);
+            }catch (ClassNotFoundException e){
+                System.out.println("No se encuentra la ruta especificada.");
+                System.exit(1);
+            }
             System.out.println("Juego cargado: ");
         }else{
             try {
@@ -46,8 +54,11 @@ public class Ahorcado {
                 System.out.println("¿Deseas guardar la partida? (s/N)");
                 if(sc.nextLine().toLowerCase().equals("s")){
                     System.out.println("Introduce el nombre completo del archivo a guardar: ");
-                    game.saveGame(sc.nextLine().toLowerCase());
-                    break;
+                    try {
+                        game.saveGame(sc.nextLine().toLowerCase());
+                    }catch (IOException e){
+                        System.out.println("Se produjo un error al guardar la partida.");
+                    }
                 }else{
                     System.out.println("El juego no se ha guardado.");
                     break;

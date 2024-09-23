@@ -94,32 +94,22 @@ public class Game implements Serializable {
         return errors >= maxErrors;
     }
 
-    public void saveGame(String fileName){
+    public void saveGame(String fileName) throws IOException{
         try (ObjectOutputStream writer = new ObjectOutputStream(new FileOutputStream(fileName+ ".bin"))){
             writer.writeObject(this);
             System.out.println("El juego se guardó con éxito.");
-        }catch (IOException e){
-            System.out.println("Se produjo un error en el guardado.");
-            System.err.println(e);
         }
     }
 
-    public static Game loadGame(String fileName){
+    public static Game loadGame(String fileName) throws IOException, ClassNotFoundException {
         Game game = null;
-        try(ObjectInputStream reader = new ObjectInputStream(new FileInputStream(fileName))){
-                Object o = reader.readObject();
-                if (o instanceof Game){
-                    game = (Game) o;
-                }
-        }catch (EOFException e){
-            System.out.println("Fin de archivo alcanzado inesperadamente.");
-        }catch (IOException e){
-            System.out.println("Se produjo un error en la lectura del archivo.");
-            System.err.println(e);
-        }catch (ClassNotFoundException e){
-            System.err.println(e);
+        try (ObjectInputStream reader = new ObjectInputStream(new FileInputStream(fileName))) {
+            Object o = reader.readObject();
+            if (o instanceof Game) {
+                game = (Game) o;
+            }
+            return game;
         }
-        return game;
     }
 }
 
