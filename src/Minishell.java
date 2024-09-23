@@ -22,11 +22,14 @@ public class Minishell {
                     salida = true;
                     break;
                 case "ls":
-                    ListarDirectorio.listarDirectorio(directorio);
+                    if(input.startsWith("ls -R")){
+                        ListarDirectorioRecursivo.listarDirectorio(directorio,0);
+                    }else{
+                        ListarDirectorio.listarDirectorio(directorio);
+                    }
                     break;
                 case "ls -R":
-                    ListarDirectorioRecursivo.listarDirectorio(directorio,0);
-                    break;
+
                 case "pwd":
                     System.out.println(directorio.toAbsolutePath().toString() + "\n");
                     break;
