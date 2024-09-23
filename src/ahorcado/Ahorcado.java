@@ -24,7 +24,9 @@ public class Ahorcado {
             try {
                 List<String> possibleWords = Files.readAllLines(Paths.get("res/ahorcado/palabras.txt"));
                 String secretWord = possibleWords.get(new Random().nextInt(0,possibleWords.size()));
-                game = new Game(secretWord,11);
+                System.out.println("Elige el nivel de dificultad (EASY | medium | hard): ");
+                String difficulty = sc.nextLine().toLowerCase();
+                game = new Game(secretWord,difficulty);
             }
             catch (IOException e){
                 System.out.println("Se produjo un error al generar la palabra secreta.");

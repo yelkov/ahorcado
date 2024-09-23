@@ -8,15 +8,16 @@ public class Game implements Serializable {
     private String secretWord;
     private StringBuilder state;
     private Integer errors;
-    private Integer maxErrors;
+    private Integer maxErrors = 11;
     private Integer attempts;
+    private String difficulty;
 
-    public Game(String secretWord, Integer maxErrors){
+    public Game(String secretWord, String difficulty) {
         this.secretWord = secretWord.toLowerCase();
         this.state = new StringBuilder("-".repeat(secretWord.length()));
-        this.errors = 0;
-        this.maxErrors = maxErrors;
+        this.difficulty = difficulty;
         this.attempts = 0;
+        setDifficulty(difficulty);
     }
 
     public String getSecretWord(){
@@ -37,6 +38,20 @@ public class Game implements Serializable {
 
     public Integer getAttempts(){
         return this.attempts;
+    }
+
+    public void setDifficulty(String difficulty){
+        switch(difficulty.toLowerCase()){
+            case "medium":
+                this.errors = 5;
+                break;
+            case "hard":
+                this.errors = 10;
+                break;
+            default:
+                this.errors = 0;
+                break;
+        }
     }
 
     public void guessLetter(Character letter){
