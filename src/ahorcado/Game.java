@@ -64,7 +64,11 @@ public class Game implements Serializable {
                 }
             }
             attempts++;
-        }else{
+        }else if(guessedCharacters.contains(letter)){
+            System.out.println("La letra " + letter + " ya fue adivinada.");
+        }
+        else{
+            guessedCharacters.add(letter);
             errors++;
             attempts++;
         }
