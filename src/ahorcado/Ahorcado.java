@@ -34,18 +34,13 @@ public class Ahorcado {
                 if (attempt.equals("exit")) {
                     System.out.println("¿Deseas guardar la partida? (s/N)");
                     if (sc.nextLine().toLowerCase().equals("s")) {
-                        System.out.println("Introduce el nombre completo del archivo a guardar: ");
-                        try {
-                            game.saveGame(sc.nextLine().toLowerCase());
-                            break;
-                        } catch (IOException e) {
-                            System.out.println("Se produjo un error al guardar la partida.");
-                        }
+                        if (isGameSaved(game, sc)) break;
                     } else {
                         System.out.println("El juego no se ha guardado.");
                         break;
                     }
                     ahorcadoIsExit = setExit(sc);
+
                 } else if (attempt.length() > 1) {
                     game.guessWord(attempt);
                 } else if (attempt.length() == 1) {
@@ -69,6 +64,17 @@ public class Ahorcado {
             }
         }
         System.out.println("¡Hasta la próxima!.");
+    }
+
+    private static boolean isGameSaved(Game game, Scanner sc) {
+        System.out.println("Introduce el nombre completo del archivo a guardar: ");
+        try {
+            game.saveGame(sc.nextLine().toLowerCase());
+            return true;
+        } catch (IOException e) {
+            System.out.println("Se produjo un error al guardar la partida.");
+        }
+        return false;
     }
 
     private static Game createNewGame(Scanner sc, Game game) {
