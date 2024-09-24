@@ -18,29 +18,9 @@ public class Ahorcado {
             String answer = sc.nextLine().toLowerCase();
 
             if (answer.equals("s")) {
-                System.out.println("Introduce la ruta completa del juego a cargar");
-                String path = sc.nextLine();
-                try {
-                    game = Game.loadGame(path);
-                } catch (IOException e) {
-                    System.out.println("Se produjo un error al cargar el juego.");
-                    System.exit(1);
-                } catch (ClassNotFoundException e) {
-                    System.out.println("No se encuentra la ruta especificada.");
-                    System.exit(1);
-                }
-                System.out.println("Juego cargado: ");
+                game = loadSavedGame(sc, game);
             } else {
-                try {
-                    List<String> possibleWords = Files.readAllLines(Paths.get("res/ahorcado/palabras.txt"));
-                    String secretWord = possibleWords.get(new Random().nextInt(0, possibleWords.size()));
-                    System.out.println("Elige el nivel de dificultad (EASY | medium | hard): ");
-                    String difficulty = sc.nextLine().toLowerCase();
-                    game = new Game(secretWord, difficulty);
-                    System.out.println("Introduce una letra o intenta adivinar la palabra. ¡Suerte!: ");
-                } catch (IOException e) {
-                    System.out.println("Se produjo un error al generar la palabra secreta.");
-                }
+                game = createNewGame(sc, game);
             }
 
             Drawing drawing = new Drawing(game);
@@ -89,6 +69,36 @@ public class Ahorcado {
             }
         }
         System.out.println("¡Hasta la próxima!.");
+    }
+
+    private static Game createNewGame(Scanner sc, Game game) {
+        try {
+            List<String> possibleWords = Files.readAllLines(Paths.get("res/ahorcado/palabras.txt"));
+            String secretWord = possibleWords.get(new Random().nextInt(0, possibleWords.size()));
+            System.out.println("Elige el nivel de dificultad (EASY | medium | hard): ");
+            String difficulty = sc.nextLine().toLowerCase();
+            game = new Game(secretWord, difficulty);
+            System.out.println("Introduce una letra o intenta adivinar la palabra. ¡Suerte!: ");
+        } catch (IOException e) {
+            System.out.println("Se produjo un error al generar la palabra secreta.");
+        }
+        return game;
+    }
+
+    private static Game loadSavedGame(Scanner sc, Game game) {
+        System.out.println("Introduce la ruta completa del juego a cargar");
+        String path = sc.nextLine();
+        try {
+            game = Game.loadGame(path);
+        } catch (IOException e) {
+            System.out.println("Se produjo un error al cargar el juego.");
+            System.exit(1);
+        } catch (ClassNotFoundException e) {
+            System.out.println("No se encuentra la ruta especificada.");
+            System.exit(1);
+        }
+        System.out.println("Juego cargado: ");
+        return game;
     }
 
     private static Boolean setExit(Scanner sc) {
