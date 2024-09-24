@@ -34,12 +34,15 @@ public class Ahorcado {
                 if (attempt.equals("exit")) {
                     System.out.println("¿Deseas guardar la partida? (s/N)");
                     if (sc.nextLine().toLowerCase().equals("s")) {
-                        if (isGameSaved(game, sc)) break;
+                        if (isGameSaved(game, sc)){
+                            System.out.println("El juego se ha guardado con éxito.");
+                        }
                     } else {
                         System.out.println("El juego no se ha guardado.");
-                        break;
+
                     }
                     ahorcadoIsExit = setExit(sc);
+                    break;
 
                 } else if (attempt.length() > 1) {
                     game.guessWord(attempt);
