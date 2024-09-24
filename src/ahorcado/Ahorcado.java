@@ -19,7 +19,10 @@ public class Ahorcado {
 
             if (answer.equals("s")) {
                 game = loadSavedGame(sc, game);
-            } else {
+            } else if(answer.equals("exit")){
+                break;
+            }
+                else {
                 game = createNewGame(sc, game);
             }
 
@@ -111,11 +114,11 @@ public class Ahorcado {
     }
 
     private static Boolean setExit(Scanner sc) {
-        System.out.println("\n ¿Deseas jugar otra partida? (s/N)");
-        if (sc.nextLine().toLowerCase().equals("s")) {
-            return false;
-        }else{
+        System.out.println("\n ¿Deseas jugar otra partida? (S/n)");
+        if (sc.nextLine().toLowerCase().equals("n")) {
             return true;
+        }else{
+            return false;
         }
     }
 }
