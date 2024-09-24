@@ -1,7 +1,0 @@
-Ferrari: 458 Italia
-Seat: Ateca,Tarraco,Ibiza
-Citröen: C1,C3 Aircross
-Mazda: 5,CX-5,3
-Ford: Focus,Fiesta
-Hyundai: Tucson,Kona
-Honda: Civic
