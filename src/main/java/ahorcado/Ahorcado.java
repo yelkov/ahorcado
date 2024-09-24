@@ -85,7 +85,7 @@ public class Ahorcado {
 
     private static Game createNewGame(Scanner sc, Game game) {
         try {
-            List<String> possibleWords = Files.readAllLines(Paths.get("res/ahorcado/palabras.txt"));
+            List<String> possibleWords = Files.readAllLines(Paths.get("src/main/resources/palabras.txt"));
             String secretWord = possibleWords.get(new Random().nextInt(0, possibleWords.size()));
             System.out.println("Elige el nivel de dificultad (EASY | medium | hard): ");
             String difficulty = sc.nextLine().toLowerCase();
